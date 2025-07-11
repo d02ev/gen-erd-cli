@@ -1,0 +1,43 @@
+{
+  "name": "gen-erd-cli",
+  "version": "1.0.0",
+  "description": "A CLI tool that generates beautiful ERD diagrams using db connection configs",
+  "keywords": [
+    "cli",
+    "cli-tool",
+    "erd",
+    "db",
+    "database",
+    "sql",
+    "react",
+    "node",
+    "express"
+  ],
+  "homepage": "https://github.com/d02ev/gen-erd-cli#readme",
+  "bugs": {
+    "url": "https://github.com/d02ev/gen-erd-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/d02ev/gen-erd-cli.git"
+  },
+  "license": "MIT",
+  "author": "Vikramaditya Pratap Singh (d02ev)",
+  "type": "module",
+  "main": "bin/index.js",
+  "scripts": {
+    "start": "node bin/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "gen-erd-cli": "./bin/index.js"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^14.0.0",
+    "inquirer": "^12.7.0",
+    "mssql": "^11.0.1",
+    "mysql2": "^3.14.1",
+    "pg": "^8.16.3"
+  }
+}
