@@ -26,8 +26,7 @@
   "type": "module",
   "main": "bin/index.js",
   "scripts": {
-    "start": "node bin/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/index.js"
   },
   "bin": {
     "gen-erd-cli": "./bin/index.js"
@@ -35,7 +34,14 @@
   "dependencies": {
     "chalk": "^5.4.1",
     "commander": "^14.0.0",
+    "express": "^5.1.0",
     "inquirer": "^12.7.0",
+    "open": "^10.1.2",
     "pg": "^8.16.3"
-  }
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "renderer/"
+  ]
 }
