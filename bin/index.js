@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { runTUI } from "../lib/tui.js";
+import { program } from "../lib/cli.js";
 
-// Run the interactive TUI
-runTUI();
+program.parse();
