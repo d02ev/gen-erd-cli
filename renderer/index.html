@@ -15,9 +15,25 @@
 </head>
 
 <body>
-      <div class="app-container">
-        <!-- Full Page Canvas -->
-        <div class="erd-canvas" id="diagramContainer">
+  <div class="app-container">
+    <!-- Full Page Canvas -->
+    <div class="erd-canvas" id="diagramContainer">
+      <!-- ERD Toolset -->
+      <div class="erd-toolset btn-group position-absolute" role="group" aria-label="ERD Toolset"
+        style="top: 24px; right: 32px;">
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="fitBtn" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Fit to Page">
+          <i class="bi bi-arrows-fullscreen"></i>
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="zoomInBtn" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Zoom In">
+          <i class="bi bi-zoom-in"></i>
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="zoomOutBtn" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Zoom Out">
+          <i class="bi bi-zoom-out"></i>
+        </button>
+      </div>
       <!-- Loading State -->
       <div id="loadingState" class="canvas-state">
         <div class="spinner-border text-primary mb-3" role="status">

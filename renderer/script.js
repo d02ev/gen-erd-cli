@@ -292,6 +292,9 @@ function renderDiagram() {
     const svg = d3.select(erdSvg);
     svg.selectAll('*').remove();
 
+    // Add a single root group for all diagram content
+    const root = svg.append('g').attr('id', 'erdRoot');
+
     // Setup drag behavior
     const drag = d3.drag()
         .on('start', function () {
@@ -399,7 +402,7 @@ function renderDiagram() {
             }
 
             const edgeId = `${table.table_name}_${fk.source_column}_${fk.target_table}_${fk.target_column}`;
-            const pathElem = svg.append('path')
+            const pathElem = root.append('path')
                 .attr('d', pathD)
                 .attr('stroke', '#0dcaf0')
                 .attr('stroke-width', 3)
@@ -416,7 +419,7 @@ function renderDiagram() {
                 const srcPt = pathElem.getPointAtLength(18);
                 const tgtPt = pathElem.getPointAtLength(totalLen - 18);
 
-                svg.append('text')
+                root.append('text')
                     .attr('x', srcPt.x)
                     .attr('y', srcPt.y - 6)
                     .attr('font-size', 13)
@@ -427,7 +430,7 @@ function renderDiagram() {
                     .attr('data-symbol-type', 'source')
                     .text(srcSym);
 
-                svg.append('text')
+                root.append('text')
                     .attr('x', tgtPt.x)
                     .attr('y', tgtPt.y - 6)
                     .attr('font-size', 13)
@@ -447,7 +450,7 @@ function renderDiagram() {
         const nodeWidth = nodeWidths[table.table_name] || NODE_WIDTH;
         const nodeHeight = HEADER_HEIGHT + ROW_HEIGHT * table.columns.length;
 
-        const g = svg.append('g')
+        const g = root.append('g')
             .attr('class', 'erd-table')
             .attr('transform', `translate(${pos.x},${pos.y})`)
             .datum(table)
@@ -542,6 +545,7 @@ function renderDiagram() {
 
 
 // Event listeners
+
 document.addEventListener('DOMContentLoaded', function () {
     // Initial load
     fetchMetadata();
@@ -556,6 +560,79 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchMetadata();
         }
     });
+
+    // --- ERD Toolset D3 Zoom/Pan Logic ---
+    const svg = d3.select('#erdSvg');
+    const diagramContainer = document.getElementById('diagramContainer');
+    let zoom = d3.zoom()
+        .scaleExtent([0.2, 3])
+        .on('zoom', (event) => {
+            svg.select('#erdRoot').attr('transform', event.transform);
+        });
+    svg.call(zoom);
+
+    // Store current transform
+    let currentTransform = d3.zoomIdentity;
+    svg.on('zoom', (event) => {
+        currentTransform = event.transform;
+    });
+    svg.on('wheel.zoom', null); // Disable default wheel zoom (optional)
+
+    // Toolset buttons
+    const fitBtn = document.getElementById('fitBtn');
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+
+    // Helper: Fit to page
+    function fitToPage() {
+        // Get bounding box of all nodes
+        const allNodes = svg.selectAll('g.erd-table');
+        if (allNodes.empty()) return;
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        allNodes.each(function () {
+            const bbox = this.getBBox();
+            minX = Math.min(minX, bbox.x);
+            minY = Math.min(minY, bbox.y);
+            maxX = Math.max(maxX, bbox.x + bbox.width);
+            maxY = Math.max(maxY, bbox.y + bbox.height);
+        });
+        const width = maxX - minX;
+        const height = maxY - minY;
+        const container = diagramContainer.getBoundingClientRect();
+
+        // Always fit bounding box + margin to viewport
+        const MARGIN = 40; // px
+        const scale = Math.min(
+            (container.width - 2 * MARGIN) / width,
+            (container.height - 2 * MARGIN) / height,
+            1
+        );
+        const tx = (container.width - width * scale) / 2 - minX * scale;
+        const ty = (container.height - height * scale) / 2 - minY * scale;
+        svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+    }
+
+    // Helper: Smooth zoom
+    function smoothZoom(factor) {
+        svg.transition().duration(300).call(zoom.scaleBy, factor);
+    }
+
+    fitBtn.addEventListener('click', fitToPage);
+    zoomInBtn.addEventListener('click', () => smoothZoom(1.2));
+    zoomOutBtn.addEventListener('click', () => smoothZoom(1 / 1.2));
+
+    // Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+        new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Auto-fit on diagram load
+    const origRenderDiagram = window.ERDRenderer.renderDiagram;
+    window.ERDRenderer.renderDiagram = function () {
+        origRenderDiagram();
+        setTimeout(fitToPage, 100); // Fit after render
+    };
 });
 
 // Export functions for potential external use
