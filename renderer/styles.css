@@ -32,28 +32,24 @@ body {
 	background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
 }
 
-
-
-
-
 /* Canvas styling */
 .erd-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
-    overflow: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+	overflow: hidden;
 }
 
 .canvas-state {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 100;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	z-index: 100;
 }
 
 /* Connect card styling */
@@ -173,15 +169,20 @@ body {
 
 /* SVG container styling */
 #erdSvg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: transparent;
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	cursor: grab;
+	transition: cursor 0.2s;
+}
+#erdSvg:active {
+	cursor: grabbing;
 }
 
 /* Fullscreen mode */
 .fullscreen .erd-canvas {
-    top: 0 !important;
+	top: 0 !important;
 }
 
 /* Enhanced focus states */
@@ -264,4 +265,36 @@ html {
 		opacity: 1;
 		box-shadow: 0 0 20px rgba(13, 110, 253, 0.6);
 	}
+}
+
+/* ERD Toolset styling */
+.erd-toolset {
+	z-index: 10;
+	background: rgba(20, 20, 30, 0.7);
+	border-radius: 12px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+	padding: 4px 8px;
+	transition: box-shadow 0.2s;
+}
+.erd-toolset .btn {
+	border-radius: 8px !important;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+.erd-toolset .btn i {
+	font-size: 1.1rem;
+	vertical-align: middle;
+}
+
+/* Lower z-index than ERD nodes/edges (assume nodes/edges use z-index >= 20 if needed) */
+.erd-canvas *:not(.erd-toolset) {
+	z-index: 20;
+}
+
+.erd-table {
+	cursor: grab;
+	transition: cursor 0.2s;
+}
+.erd-table:active {
+	cursor: grabbing;
 }
