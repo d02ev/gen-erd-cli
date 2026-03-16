@@ -38,13 +38,13 @@
 		"commander": "^14.0.0",
 		"express": "^5.1.0",
 		"inquirer": "^12.7.0",
+		"mssql": "^12.2.0",
 		"mysql2": "^3.15.3",
 		"open": "^10.1.2",
 		"oracledb": "^6.10.0",
-		"mssql": "^12.2.0",
 		"pg": "^8.16.3",
 		"sqlite": "^5.1.1",
-		"sqlite3": "^5.1.7"
+		"sqlite3": "^6.0.1"
 	},
 	"files": [
 		"bin/",
