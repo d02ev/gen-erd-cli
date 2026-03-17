@@ -2,16 +2,6 @@
 
 > A CLI tool that generates beautiful ERD diagrams from your database schema using various authentication methods.
 
----
-
-## 📸 Demo
-
-![Demo GIF](./assets/demo.gif)
-
-> 💡 _Tip: Use tools like [Terminalizer](https://terminalizer.com/) for CLI demos or [Loom](https://loom.com) for web apps._
-
----
-
 ## 🧠 The Problem It Solves
 
 While skimming through legacy codebase documentations at work, I noticed there were little to no documentation about the database—the tables, schema diagram, etc.—not even in the database repo. It was frustrating and time-consuming to gather info on the tables and their relationships.
