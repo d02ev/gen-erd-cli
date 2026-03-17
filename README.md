@@ -1,25 +1,38 @@
-# gen-erd-cli
+# 🚀 gen-erd-cli
 
-A CLI tool that generates beautiful ERD diagrams from your database schema using various authentication methods.
+> A CLI tool that generates beautiful ERD diagrams from your database schema using various authentication methods.
 
-## Features
+---
 
-- Interactive Terminal User Interface (TUI)
-- Web-based ERD visualization with automatic browser opening
-- Support for multiple database types:
-  - PostgreSQL
-  - MySQL
-  - SQL Server (MSSQL)
-  - SQLite
-  - Oracle
-- Support for multiple authentication methods:
+## 📸 Demo
+
+![Demo GIF](./assets/demo.gif)
+
+> 💡 _Tip: Use tools like [Terminalizer](https://terminalizer.com/) for CLI demos or [Loom](https://loom.com) for web apps._
+
+---
+
+## 🧠 The Problem It Solves
+
+While skimming through legacy codebase documentations at work, I noticed there were little to no documentation about the database—the tables, schema diagram, etc.—not even in the database repo. It was frustrating and time-consuming to gather info on the tables and their relationships.
+
+**Solution:** A CLI tool that connects to your database using a connection string or credentials, lets you choose the schema, select the tables, and automatically generates an ERD diagram for you.
+
+---
+
+## ✨ Features
+
+- ⚡ **Interactive Terminal User Interface (TUI)** — Guided workflow with prompts
+- 🌐 **Web-based ERD visualization** — Automatic browser opening with interactive diagrams
+- 🗄️ **Multi-database support** — PostgreSQL, MySQL, SQL Server (MSSQL), SQLite
+- 🔐 **Multiple authentication methods**:
   - Connection String
   - Credentials (Username/Password)
   - Windows Authentication (NTLM) - MSSQL only
-  - Azure AD (Entra ID) - MSSQL, PostgreSQL, MySQL, Oracle
+  - Azure AD (Entra ID) - MSSQL, PostgreSQL, MySQL
   - AWS IAM - PostgreSQL (RDS) only
 
-## Installation
+## ⚙️ Installation
 
 ```bash
 npm install -g gen-erd-cli
@@ -32,7 +45,7 @@ Or use with npx:
 npx gen-erd-cli init
 ```
 
-## Usage
+## 📖 Usage
 
 Run the CLI tool:
 
@@ -70,9 +83,6 @@ mssql://username:password@localhost:1433/database_name
 # SQLite
 sqlite:///path/to/database.db
 file:/absolute/path/to/database.db
-
-# Oracle
-oracle://username:password@localhost:1521/service_name
 ```
 
 ### 2. Credentials (Username/Password)
@@ -119,7 +129,7 @@ This will authenticate as `CORP\johndoe` using NTLM authentication.
 
 ### 4. Azure AD (Entra ID)
 
-**Supported by:** SQL Server, PostgreSQL, MySQL, Oracle
+**Supported by:** SQL Server, PostgreSQL, MySQL
 
 Use this for Azure cloud databases where you want to authenticate using Azure Active Directory.
 
@@ -257,7 +267,7 @@ Profile Name: development
 Region: us-west-2
 ```
 
-## Database Compatibility Table
+## 🗂️ Database Compatibility Table
 
 | Database | Connection String | Credentials | Windows Auth | Azure AD | AWS IAM |
 |----------|------------------|-------------|--------------|----------|---------|
@@ -265,9 +275,8 @@ Region: us-west-2
 | MySQL | ✓ | ✓ | - | ✓ | - |
 | SQL Server | ✓ | ✓ | ✓ | ✓ | - |
 | SQLite | ✓ | ✓ | - | - | - |
-| Oracle | ✓ | ✓ | - | ✓ | - |
 
-## Authentication Flow by Database
+## 🛣️ Authentication Flow by Database
 
 ### SQL Server (MSSQL)
 
@@ -289,18 +298,12 @@ Region: us-west-2
 2. Credentials → Native MySQL authentication
 3. Azure AD → Azure AD authentication via mysql_clear_password plugin
 
-### Oracle
-
-1. Connection String → Oracle connection string
-2. Credentials → Oracle authentication
-3. Azure AD → Oracle Cloud IAM or external authentication
-
 ### SQLite
 
 1. Connection String → File path in URI format
 2. Credentials → File path only (no auth)
 
-## Troubleshooting
+## 🧪 Troubleshooting
 
 ### Azure AD Issues
 
@@ -397,15 +400,16 @@ Region: us-west-2
 - For PostgreSQL: Try adding `?sslmode=require`
 - For MSSQL Azure: Ensure `encrypt=true` in connection
 
-## Recent Updates
+## 📖 Recent Updates
 
+- **v2.2.0**: Fixed MySQL column and connection rendering issues; Fixed MSSQL connection string parsing for URL format
 - **v2.1.0**: Added multiple authentication methods:
   - Windows Authentication (NTLM) for SQL Server
   - Azure AD / Entra ID support (Service Principal, Managed Identity, Username/Password)
   - AWS IAM authentication for PostgreSQL RDS
-- **v2.0.0**: Added MySQL, SQL Server, SQLite, Oracle databases and web-based ERD visualization
+- **v2.0.0**: Added MySQL, SQL Server, SQLite databases and web-based ERD visualization
 - Enhanced interactive CLI with better error handling
 
-## License
+## 📄 License
 
 MIT

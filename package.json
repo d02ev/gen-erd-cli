@@ -1,7 +1,7 @@
 {
 	"name": "gen-erd-cli",
-	"version": "2.1.0",
-	"description": "A CLI tool that generates beautiful ERD diagrams using database connection configs. Supports PostgreSQL, MySQL, SQL Server, SQLite, and Oracle.",
+	"version": "2.2.0",
+	"description": "A CLI tool that generates beautiful ERD diagrams using database connection configs. Supports PostgreSQL, MySQL, SQL Server, and SQLite.",
 	"keywords": [
 		"cli",
 		"erd",
@@ -10,7 +10,6 @@
 		"mysql",
 		"sql-server",
 		"sqlite",
-		"oracle",
 		"diagram",
 		"schema"
 	],
@@ -41,7 +40,6 @@
 		"mssql": "^12.2.0",
 		"mysql2": "^3.15.3",
 		"open": "^10.1.2",
-		"oracledb": "^6.10.0",
 		"pg": "^8.16.3",
 		"sqlite": "^5.1.1",
 		"sqlite3": "^6.0.1"

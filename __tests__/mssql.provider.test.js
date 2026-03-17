@@ -11,9 +11,13 @@ describe('MSSQLProvider', () => {
     it('should create config with connection string', () => {
       const provider = new MSSQLProvider({
         connectionType: CONNECTION_TYPE_CONNECTION_STRING,
-        connectionString: 'mssql://user:pass@localhost/database'
+        connectionString: 'mssql://user:pass@localhost:1433/database'
       });
-      expect(provider.config.connectionString).toBe('mssql://user:pass@localhost/database');
+      expect(provider.config.server).toBe('localhost');
+      expect(provider.config.port).toBe(1433);
+      expect(provider.config.user).toBe('user');
+      expect(provider.config.password).toBe('pass');
+      expect(provider.config.database).toBe('database');
     });
 
     it('should create config with credentials', () => {
@@ -107,6 +111,36 @@ describe('MSSQLProvider', () => {
         database: 'testdb'
       });
       expect(provider.connectionType).toBe(CONNECTION_TYPE_CREDENTIALS);
+    });
+
+    it('should parse connection string with URL-encoded password', () => {
+      const provider = new MSSQLProvider({
+        connectionType: CONNECTION_TYPE_CONNECTION_STRING,
+        connectionString: 'mssql://user:p%40ss%40word@localhost:1433/database'
+      });
+      expect(provider.config.server).toBe('localhost');
+      expect(provider.config.user).toBe('user');
+      expect(provider.config.password).toBe('p@ss@word');
+      expect(provider.config.database).toBe('database');
+    });
+
+    it('should parse connection string with query parameters', () => {
+      const provider = new MSSQLProvider({
+        connectionType: CONNECTION_TYPE_CONNECTION_STRING,
+        connectionString: 'mssql://user:pass@localhost:1433/database?encrypt=true&trustServerCertificate=false'
+      });
+      expect(provider.config.server).toBe('localhost');
+      expect(provider.config.database).toBe('database');
+      expect(provider.config.options.encrypt).toBe(true);
+      expect(provider.config.options.trustServerCertificate).toBe(false);
+    });
+
+    it('should parse connection string with database in query param', () => {
+      const provider = new MSSQLProvider({
+        connectionType: CONNECTION_TYPE_CONNECTION_STRING,
+        connectionString: 'mssql://user:pass@localhost:1433?database=testdb'
+      });
+      expect(provider.config.database).toBe('testdb');
     });
   });
 });
