@@ -392,6 +392,7 @@ Region: us-west-2
 
 ## 📖 Recent Updates
 
+- **v2.3.0**: Removed Demo section from README
 - **v2.2.0**: Fixed MySQL column and connection rendering issues; Fixed MSSQL connection string parsing for URL format
 - **v2.1.0**: Added multiple authentication methods:
   - Windows Authentication (NTLM) for SQL Server

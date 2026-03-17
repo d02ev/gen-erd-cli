@@ -1,6 +1,6 @@
 {
 	"name": "gen-erd-cli",
-	"version": "2.2.0",
+	"version": "2.3.0",
 	"description": "A CLI tool that generates beautiful ERD diagrams using database connection configs. Supports PostgreSQL, MySQL, SQL Server, and SQLite.",
 	"keywords": [
 		"cli",
